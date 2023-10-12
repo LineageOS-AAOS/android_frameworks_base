@@ -29,7 +29,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.Slog;
@@ -458,14 +457,6 @@ class LockSettingsStorage {
         }
         writeFile(getLockPasswordFilename(userId), passwordHash);
         writeFile(getLockPatternFilename(userId), patternHash);
-    }
-
-    public byte getLockPatternSize(int userId) {
-        long size = Long.valueOf(readKeyValue(Settings.Secure.LOCK_PATTERN_SIZE, "-1", userId));
-        if (size > 0 && size < 128) {
-            return (byte) size;
-        }
-        return LockPatternUtils.PATTERN_SIZE_DEFAULT;
     }
 
     @VisibleForTesting
